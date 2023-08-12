@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FLAMES Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, rgba(135, 206, 235, 0.8), rgba(255, 255, 255, 0.8)), url("background.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            animation: dance 2s ease infinite alternate; /* Apply the dance animation */
+        }
+        
+        @keyframes dance {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-5px);
+            }
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .form-container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .input-field {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+        
+        .submit-btn {
+            display: block;
+            width: 50%;
+            margin: 0 auto; /* Center the button horizontally */
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.05); /* Scale up the button on hover */
+        }
+        
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-in-out, magicPop 2s ease-in-out;
+        }
+        
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes magicPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="form-container">
+            <h1 style="text-align: center;">FLAMES Game</h1>
+            <form method="POST">
+                <label class="form-label" for="name1">Name 1:</label>
+                <input class="input-field" type="text" name="name1" id="name1" required>
+                <label class="form-label" for="name2">Name 2:</label>
+                <input class="input-field" type="text" name="name2" id="name2" required>
+                <button class="submit-btn" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- Popup for result display -->
+    <div class="popup" id="resultPopup">
+        <p class="result" id="popupResult"></p>
+    </div>
+    <script>
+        // Function to show and hide the popup
+        function showPopup(message) {
+            const popup = document.getElementById("resultPopup");
+            const popupResult = document.getElementById("popupResult");
+            popupResult.innerText = message;
+            popup.style.display = "block";
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 3000); // Hide the popup after 3 seconds
+    
+            // Reset input fields
+            document.getElementById("name1").value = "";
+            document.getElementById("name2").value = "";
+        }
+    
+        // Listen for form submission
+        document.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const name1 = document.getElementById("name1").value;
+            const name2 = document.getElementById("name2").value;
+            const result = "{{ result }}"; // Replace this with the actual result from Flask
+            // Show the popup with the result
+            showPopup("Result: " + result);
+        });
+    </script>
+    
+</body>
+</html>
